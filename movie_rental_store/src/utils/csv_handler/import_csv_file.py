@@ -4,6 +4,14 @@ __author__ = 'JimenaSanabria'
 
 import os
 import csv
+import sys
+
+sys.path.append(os.path.abspath("../../"))
+
+from logs.logger_handler import LoggerHandler
+from configure import DEFAULT_LOG_PATH
+
+LOGGER = LoggerHandler(DEFAULT_LOG_PATH)
 
 def get_file_data(reader_file):
     """Get a list of string dictionary for the data of a file
@@ -38,7 +46,7 @@ def parse_csv_file(file_path):
         import_file = open(file_path, "rb")
 
     except IOError:
-        print 'An error occured trying to read the file.'
+        LOGGER.error('An error occured trying to read the file.')
 
     else:
         reader_file = csv.DictReader(import_file)

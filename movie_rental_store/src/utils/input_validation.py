@@ -1,8 +1,17 @@
 __author__ = 'JimenaSanabria'
 
+import sys
+import os
+sys.path.append('../../src')
+sys.path.append(os.path.abspath("../../"))
+
 import datetime
+from logs.logger_handler import LoggerHandler
+from configure import DEFAULT_LOG_PATH
 
 """Method to validate input data from console."""
+
+LOGGER = LoggerHandler(DEFAULT_LOG_PATH)
 
 def get_date_input(item_name):
     """Verify that the input from console is a date.
@@ -20,7 +29,7 @@ def get_date_input(item_name):
             item = datetime.datetime.strptime(item, "%d-%m-%Y")
             break
         except:
-            print "Error, a " + item_name +" needs to have the format dd-mm-yyyy."
+            LOGGER.error("Error, value: " + item +". It needs to have the format dd-mm-yyyy.")
     return item
 
 def get_integer_input(item_name):
@@ -38,7 +47,7 @@ def get_integer_input(item_name):
             item = int(input(item_name + ":"))
             break
         except:
-            print "Error, a " + item_name +" needs to be an integer number."
+            LOGGER.error("Error, a " + item_name +" needs to be an integer number.")
     return item
     
 def get_option_input(item_name, options_list):
@@ -57,5 +66,5 @@ def get_option_input(item_name, options_list):
         if item in options_list:
             break
         else:
-            print "Error, a " + item_name +" needs to be an option of list."
+            LOGGER.error("Error, value: " + item + ". " + item_name +" needs to be an option of list.")
     return item

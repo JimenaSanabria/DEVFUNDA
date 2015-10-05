@@ -2,9 +2,11 @@
 import sys
 import os
 sys.path.append(os.path.abspath("../../src"))
+sys.path.append(os.path.abspath("../../"))
 
 import unittest
 from logs.logger_handler import LoggerHandler
+from configure import DEFAULT_LOG_PATH
 
 class LoggerHandlerTest(unittest.TestCase):
     """Unit tests for LoggerHandler"""
@@ -17,16 +19,13 @@ class LoggerHandlerTest(unittest.TestCase):
         self.error_message = "Unit test for error log"
         self.warning_message = "Unit test for warning log"
         
-        dir_name = os.path.dirname(os.path.abspath(__file__))
-        self.log_file_path = dir_name + "/test.log"
-        
-        self.logger = LoggerHandler(self.log_file_path)
+        self.logger = LoggerHandler(DEFAULT_LOG_PATH)
         self.logger.debug(self.debug_message)
         self.logger.info(self.info_message)
         self.logger.error(self.error_message)
         self.logger.warning(self.warning_message)
 
-        file = open(self.log_file_path, "r")
+        file = open(DEFAULT_LOG_PATH, "r")
         self.all_lines_path = file.readlines()
         file.close()
 
@@ -52,7 +51,7 @@ class LoggerHandlerTest(unittest.TestCase):
     def test_logger_handler_use_singleton_class(self):
         """Test singleton class used in logger handler"""
 
-        other_logger = LoggerHandler(self.log_file_path)
+        other_logger = LoggerHandler(DEFAULT_LOG_PATH)
         self.assertEqual(self.logger, other_logger)
 
     def test_debug_log_message(self):
